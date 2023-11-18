@@ -11,9 +11,23 @@ operator>> (stream_in& in, point& p) {
   return in;
 }
 
+template<typename container>
+double square(container& points) {
+  double s{};
+
+  for (std::size_t i{}; i < points.size() - 1; ++i) {
+    s += points[i].first * points[i + 1].second;
+    s -= points[i].second * points[i + 1].first;
+  }
+
+  s += points.back().first * points.front().second;
+  s -= points.back().second * points.front().first;
+
+  return std::abs(s) / 2.0;
+}
+
 int main(void) {
   std::size_t n{};
-  double square{};
 
   std::cin >> n;
   std::vector<std::pair<double, double>> points(n);
@@ -22,13 +36,5 @@ int main(void) {
     std::cin >> p;
   }
 
-  for (std::size_t i{}; i < points.size() - 1; ++i) {
-    square += points[i].first * points[i + 1].second;
-    square -= points[i].second * points[i + 1].first;
-  }
-
-  square += points.back().first * points.front().second;
-  square -= points.back().second * points.front().first;
-
-  std::cout << std::abs(square) / 2.0  << '\n';
+  std::cout << square(points) << '\n';
 }
