@@ -12,7 +12,7 @@ operator>> (stream_in& in, point& p) {
 }
 
 template<typename container>
-double square(container& points) {
+double square(const container& points) {
   double s{};
 
   for (std::size_t i{}; i < points.size() - 1; ++i) {
